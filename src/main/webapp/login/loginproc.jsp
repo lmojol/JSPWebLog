@@ -4,6 +4,7 @@
 <%
 request.setCharacterEncoding("utf-8");
 %>
+
 <%
 String id=request.getParameter("id");
 String password=request.getParameter("password");
@@ -15,39 +16,38 @@ String pw="123456";
 
 Class.forName(driver);
 Connection conn=DriverManager.getConnection(url,user,pw);
-//데이터베이스 접속성공
-
+//접속성공
 String sql="select * from nmember where id=?";
 PreparedStatement pstmt=conn.prepareStatement(sql);
 pstmt.setString(1, id);
-ResultSet rs=pstmt.executeQuery(); //화면에 입력한 값을 ?에 넣음
+ResultSet rs=pstmt.executeQuery();
 //검사진행 일치판단
 String ypass="";
 int x=-1;
 String msg="";
-//비밀번호 일치판단
-if(rs.next()){ //아이디가 존재한다
-	ypass = rs.getString("pwd"); //'rs.getString'(데이터베이스 칼럼명)
-	if(ypass.equals(password)){
+
+if(rs.next()){//아이디가 존재
+	ypass=rs.getString("pwd");
+	if(ypass.equals(password))
 		x=1;
-	}else{//아이디는 있으나 비밀번호가 틀림
+	else
 		x=0;
-	}
-}else{ //아이디가 존재하지 않는다.
+}else{//아이디가 존재하지 않는다
 	x=-1;
 }
 System.out.println("x value : "+x);
 if(x==1){
-	//로그인 성공 ,세션에 저장,MainForm.jsp로 이동
-	session.setAttribute("sessionID", id); /* 'sessionID'라는 이름으로 'id'를 저장 */
-	msg="../mainform.jsp";
+	//로그인성공 세션에 저장 go MainForm.jsp
+	session.setAttribute("sessionID", id);
+	msg="../MainForm.jsp";	
 }else if(x==0){
-	msg="01loginform.jsp?msg=0";
-}else {
-	msg="01loginform.jsp?msg=-1";
+	msg="loginform.jsp?msg=0";
+}else{
+	msg="loginform.jsp?msg=-1";
 }
 
 response.sendRedirect(msg);
+
 
 %>
 <!DOCTYPE html>
@@ -57,6 +57,7 @@ response.sendRedirect(msg);
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>loginproc</h3>
+<h3>loginproc.jsp</h3>
+
 </body>
 </html>

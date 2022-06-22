@@ -15,54 +15,57 @@ import notice.controller.customer.NoticeEditController;
 import notice.controller.customer.NoticeEditProcController;
 import notice.controller.customer.NoticeRegController;
 import notice.controller.customer.NoticeRegProcController;
+import notice.controller.joinus.LoginController;
+import notice.controller.joinus.LoginProcController;
 
-public class MyDispatcher extends HttpServlet {
+public class MyDispatcher extends HttpServlet{
+	
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("신호");
 		String uri=request.getRequestURI();
-		String conpath=request.getContextPath();
-		String com=uri.substring(conpath.length());
+		String conPath=request.getContextPath();
+		String com=uri.substring(conPath.length());
 		
 		System.out.println("uri : "+uri);
-		System.out.println("conpath : "+conpath);
+		System.out.println("conPath : "+conPath);
 		System.out.println("com : "+com);
 		
-		/*
-		 * NoticeDetailController controller1=new NoticeDetailController();
-		 * NoticeEditController controller2=new NoticeEditController();
-		 */
+//		NoticeDetailController controller1=new NoticeDetailController();
+//		NoticeEditController controller2=new NoticeEditController();
 		Controller controller=null;
 		
+		
 		try {
-			if(com.equals("/customer/noticeDetail.do")) {//A-1 해당 주소로 오면
-				controller=new NoticeDetailController(); //A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/noticeEdit.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeEditController();//A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/noticeEditProc.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeEditProcController();//A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/noticeReg.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeRegController();//A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/noticeRegProc.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeRegProcController();//A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/noticeDelProc.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeDelProcController();//A-2 해당 주소로 보내라
-			}
-			else if(com.equals("/customer/notice.do")) {//A-1 해당 주소로 오면
-				controller= new NoticeController();//A-2 해당 주소로 보내라
+			if(com.equals("/customer/noticeDetail.do")) {
+				controller=new NoticeDetailController();
+			}else if(com.equals("/customer/noticeEdit.do")) {
+				controller=new NoticeEditController();
+			}else if(com.equals("/customer/noticeEditProc.do")) {
+				controller=new NoticeEditProcController();
+			}else if(com.equals("/customer/noticeReg.do")) {
+				controller=new NoticeRegController();
+			}else if(com.equals("/customer/noticeRegProc.do")) {
+				controller=new NoticeRegProcController();
+			}else if(com.equals("/customer/noticeDelProc.do")) {
+				controller=new NoticeDelProcController();
+			}else if(com.equals("/customer/notice.do")) {
+				controller=new NoticeController();
+			}else if(com.equals("/login/login.do")) {
+				controller=new LoginController();
+			}else if(com.equals("/login/loginproc.do")) {
+				controller=new LoginProcController();
 			}
 			
 			controller.execute(request, response);
 			
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
+		
 	}
 	
+
 }
